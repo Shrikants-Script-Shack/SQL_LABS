@@ -1,0 +1,74 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select * from cust;
++----+--------+------+-------------+
+| id | name   | age  | district|
++----+--------+------+-------------+
+| a | shrikant |   11 | latur| 
+| b | shreyash   |   12 | chakur     | 
+| c | rutuja |   13 | udgir       | 
+| d | ram |   14 | nanded      | 
+| e | shraddha |   15 | pune     |
++----+--------+------+-------------+
+mysql> delimiter /
+mysql> create procedure a()
+    -> begin
+    -> select * from cust;
+    -> end;  
+    -> /
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> call a;
++----+--------+------+-------------+
+| id | name   | age  | district|
++----+--------+------+-------------+
+| a | shrikant |   11 | latur| 
+| b | shreyash   |   12 | chakur      | 
+| c | rutuja |   13 | udgir      | 
+| d | ram |   14 | nanded      | 
+| e | shraddha |   15 | pune     |
++----+--------+------+-------------+
+5 rows in set (0.00 sec)
+mysql> select * from list;
+    -> /
++----+-------+---------+-----+----------+------------+
+| id | name  | address | age | salary   | dob        |
++----+-------+---------+-----+----------+------------+
+| 1  | shrikant| pune    |  21 | 50k |2000-01-19 |
+| 2  | shreyash| mumbai  |  12 | 60k | 2000-02-19 |
+| 3  | chinki| pune |  30 | 70k | 2000-03-19 |
++----+-------+---------+-----+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> create procedure find_list(IN ids int)
+    -> begin
+    -> select * from list where id=ids;
+    -> end;
+    -> /
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> call find_list(1)/
++----+-------+---------+-----+----------+------------+
+| id | name  | address | age | salary   | dob        |
++----+-------+---------+-----+----------+------------+
+| 1  | shrikant| pune    |  21 | 50k | 2000-01-19 |
++----+-------+---------+-----+----------+------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create function hello2 (s char(11))
+    -> returns char(50) deterministic
+    -> return concat('Hello ',s,'!');
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select hello2('world');
++-----------------+
+| hello2('world') |
++-----------------+
+| Hello world!    |
++-----------------+
+1 row in set (0.01 sec)

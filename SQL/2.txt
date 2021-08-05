@@ -1,0 +1,148 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> create table employee(srno integer(10),name varchar(10),joining_date varchar(20),salory integer(10));
+Query OK, 0 rows affected, 2 warnings (1.84 sec)
+
+mysql> insert into employee values(101,shrikant,'19-1-2000',458215);
+ERROR 1054 (42S22): Unknown column 'shrikant' in 'field list'
+mysql> insert into employee values(101,'shrikant','19-1-2000',458215);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into employee values(102,'shreyash','5-2-2001',78545);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into employee values(103,'yogesh','3-2-2007',21546);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into employee values(104,'nilesh','31-7-2005',66545);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into employee values(105,'ram','28-2-2007',58555);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from employee;
++------+----------+--------------+--------+
+| srno | name     | joining_date | salory |
++------+----------+--------------+--------+
+|  101 | shrikant | 19-1-2000    | 458215 |
+|  102 | shreyash | 5-2-2001     |  78545 |
+|  103 | yogesh   | 3-2-2007     |  21546 |
+|  104 | nilesh   | 31-7-2005    |  66545 |
+|  105 | ram      | 28-2-2007    |  58555 |
++------+----------+--------------+--------+
+5 rows in set (0.04 sec)
+
+mysql> insert into employee2 select * from employee;
+ERROR 1146 (42S02): Table 'labs.employee2' doesn't exist
+mysql> create table employee2;
+ERROR 1113 (42000): A table must have at least 1 column
+mysql> create table employee2(srno integer(10),name varchar(10),joining_date varchar(20),salory integer(10));
+Query OK, 0 rows affected, 2 warnings (1.71 sec)
+
+mysql> insert into employee2 select * from employee;
+Query OK, 5 rows affected (0.17 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from employee2;
++------+----------+--------------+--------+
+| srno | name     | joining_date | salory |
++------+----------+--------------+--------+
+|  101 | shrikant | 19-1-2000    | 458215 |
+|  102 | shreyash | 5-2-2001     |  78545 |
+|  103 | yogesh   | 3-2-2007     |  21546 |
+|  104 | nilesh   | 31-7-2005    |  66545 |
+|  105 | ram      | 28-2-2007    |  58555 |
++------+----------+--------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee where salory>50000;
++------+----------+--------------+--------+
+| srno | name     | joining_date | salory |
++------+----------+--------------+--------+
+|  101 | shrikant | 19-1-2000    | 458215 |
+|  102 | shreyash | 5-2-2001     |  78545 |
+|  104 | nilesh   | 31-7-2005    |  66545 |
+|  105 | ram      | 28-2-2007    |  58555 |
++------+----------+--------------+--------+
+4 rows in set (0.05 sec)
+
+mysql> select * from employee where joining_date='31-7-2005';
++------+--------+--------------+--------+
+| srno | name   | joining_date | salory |
++------+--------+--------------+--------+
+|  104 | nilesh | 31-7-2005    |  66545 |
++------+--------+--------------+--------+
+1 row in set (0.01 sec)
+
+mysql> select distinct(salory) from employee;
++--------+
+| salory |
++--------+
+| 458215 |
+|  78545 |
+|  21546 |
+|  66545 |
+|  58555 |
++--------+
+5 rows in set (0.04 sec)
+
+mysql> select * from employee order by salory;
++------+----------+--------------+--------+
+| srno | name     | joining_date | salory |
++------+----------+--------------+--------+
+|  103 | yogesh   | 3-2-2007     |  21546 |
+|  105 | ram      | 28-2-2007    |  58555 |
+|  104 | nilesh   | 31-7-2005    |  66545 |
+|  102 | shreyash | 5-2-2001     |  78545 |
+|  101 | shrikant | 19-1-2000    | 458215 |
++------+----------+--------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee set salory=salory*2 where srno=104;
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> delete from employee where srno=102;
+Query OK, 1 row affected (0.15 sec)
+
+mysql> select *from employee;
++------+----------+--------------+--------+
+| srno | name     | joining_date | salory |
++------+----------+--------------+--------+
+|  101 | shrikant | 19-1-2000    | 458215 |
+|  103 | yogesh   | 3-2-2007     |  21546 |
+|  104 | nilesh   | 31-7-2005    | 133090 |
+|  105 | ram      | 28-2-2007    |  58555 |
++------+----------+--------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee where srno between 102 and 103;
++------+--------+--------------+--------+
+| srno | name   | joining_date | salory |
++------+--------+--------------+--------+
+|  103 | yogesh | 3-2-2007     |  21546 |
++------+--------+--------------+--------+
+1 row in set (0.04 sec)
+
+mysql>
+mysql> select * from employee where srno not in( 102, 103);
++------+----------+--------------+--------+
+| srno | name     | joining_date | salory |
++------+----------+--------------+--------+
+|  101 | shrikant | 19-1-2000    | 458215 |
+|  104 | nilesh   | 31-7-2005    | 133090 |
+|  105 | ram      | 28-2-2007    |  58555 |
++------+----------+--------------+--------+
+3 rows in set (0.04 sec)
+
+mysql> select * from employee where srno  in( 102, 103);
++------+--------+--------------+--------+
+| srno | name   | joining_date | salory |
++------+--------+--------------+--------+
+|  103 | yogesh | 3-2-2007     |  21546 |
++------+--------+--------------+--------+
+1 row in set (0.00 sec)
+> than 102 and ==103

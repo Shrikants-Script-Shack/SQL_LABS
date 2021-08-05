@@ -1,0 +1,163 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                 Shrikant Sabde
+						                 TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Enter password: *******************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.21 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use dbms;
+Database changed
+mysql> create table four(employee_no integer(10),employee_name varchar(20),joining_date integer(10),salory integer(10));
+Query OK, 0 rows affected, 3 warnings (3.22 sec)
+
+mysql> create table foursec(employee_no integer(10),employee_dept varchar(30));
+Query OK, 0 rows affected, 1 warning (0.86 sec)
+
+mysql> insert into four values(101,'shrikant',19-1-2000,452662)
+    -> ;
+Query OK, 1 row affected (0.48 sec)
+
+mysql> insert into four values(102,'shreyash',19-5-2010,74552);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into four values(103,'guru',4-5-2002,12345);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into four values(104,'ramu',7-5-2004,21546);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into four values(105,'yogu',3-4-2000,96356);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from four;
++-------------+---------------+--------------+--------+
+| employee_no | employee_name | joining_date | salory |
++-------------+---------------+--------------+--------+
+|         101 | shrikant      |        -1982 | 452662 |
+|         102 | shreyash      |        -1996 |  74552 |
+|         103 | guru          |        -2003 |  12345 |
+|         104 | ramu          |        -2002 |  21546 |
+|         105 | yogu          |        -2001 |  96356 |
++-------------+---------------+--------------+--------+
+5 rows in set (0.08 sec)
+
+mysql> insert into foursec values(101,'computer');
+Query OK, 1 row affected (0.27 sec)
+
+mysql> insert into foursec values(102,'computer');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into foursec values(103,'civil');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into foursec values(104,'etc');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert into foursec values(105,'electrical');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from foursec;
++-------------+---------------+
+| employee_no | employee_dept |
++-------------+---------------+
+|         101 | computer      |
+|         102 | computer      |
+|         103 | civil         |
+|         104 | etc           |
+|         105 | electrical    |
++-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from four where employee_no in(select foursec from foursec where employee_dept='computer');
+ERROR 1054 (42S22): Unknown column 'foursec' in 'field list'
+mysql> select * from four where employee_no IN(select employee_no from foursec where employee_dept='computer');
++-------------+---------------+--------------+--------+
+| employee_no | employee_name | joining_date | salory |
++-------------+---------------+--------------+--------+
+|         101 | shrikant      |        -1982 | 452662 |
+|         102 | shreyash      |        -1996 |  74552 |
++-------------+---------------+--------------+--------+
+2 rows in set (0.07 sec)
+
+mysql> update four
+    -> set salory=salory *2
+    -> where employee_no IN (select employee_no FROM foursec where employee_dept='etc');
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from four;
++-------------+---------------+--------------+--------+
+| employee_no | employee_name | joining_date | salory |
++-------------+---------------+--------------+--------+
+|         101 | shrikant      |        -1982 | 452662 |
+|         102 | shreyash      |        -1996 |  74552 |
+|         103 | guru          |        -2003 |  12345 |
+|         104 | ramu          |        -2002 |  43092 |
+|         105 | yogu          |        -2001 |  96356 |
++-------------+---------------+--------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> delete from four
+    -> where employee_no IN (select employee_no from foursec
+    -> where employee_dept='civil';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> delete from four
+    -> where employee_no IN (select employee_no from foursec
+    -> where employee_dept='civil');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> select * from four;
++-------------+---------------+--------------+--------+
+| employee_no | employee_name | joining_date | salory |
++-------------+---------------+--------------+--------+
+|         101 | shrikant      |        -1982 | 452662 |
+|         102 | shreyash      |        -1996 |  74552 |
+|         104 | ramu          |        -2002 |  43092 |
+|         105 | yogu          |        -2001 |  96356 |
++-------------+---------------+--------------+--------+
+4 rows in set (0.04 sec)
+
+mysql> insert into four
+    -> select * from foursec
+    -> where employee_no IN (select employee_no from foursec);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into four values(103,'shriram',3-4-2000,452222);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into four
+    -> select * from four;
+Query OK, 5 rows affected (0.18 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from foursec
+    -> /c;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '/c' at line 2
+mysql> select * from four;
++-------------+---------------+--------------+--------+
+| employee_no | employee_name | joining_date | salory |
++-------------+---------------+--------------+--------+
+|         101 | shrikant      |        -1982 | 452662 |
+|         102 | shreyash      |        -1996 |  74552 |
+|         104 | ramu          |        -2002 |  43092 |
+|         105 | yogu          |        -2001 |  96356 |
+|         103 | shriram       |        -2001 | 452222 |
+|         101 | shrikant      |        -1982 | 452662 |
+|         102 | shreyash      |        -1996 |  74552 |
+|         104 | ramu          |        -2002 |  43092 |
+|         105 | yogu          |        -2001 |  96356 |
+|         103 | shriram       |        -2001 | 452222 |
++-------------+---------------+--------------+--------+
+10 rows in set (0.00 sec)
+
+mysql>

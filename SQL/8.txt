@@ -1,0 +1,152 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select * from emp;
++--------+------+---------+----------+------------+------------+-----------+
+| emp_id | name | dept_id | salary   | DOB        | phone_no   | city      |
++--------+------+---------+----------+------------+------------+-----------+
+|    101 | SHRIKANT  | 401     |  8000.00 | 1995-07-24 | 123456789 | Latur     |
+|    102 | SHREYASH | 401     |  9000.00 | 1996-07-14 | 1111111 | pimpari    |
+|    103 | SHUBHAM  | 402     | 12000.00 | 1990-11-01 | 22222222 | pimpari    |
+|    104 | PRATIK  | 403     | 20000.00 | 1988-12-31 | 3333333 | Udgir   |
+|    105 | RAJU  | 404     |  6000.00 | 1997-02-09 | 44444444 | Nashik |
+|    106 | CHINMAY | 405     | 21000.00 | 1995-04-09 | 55555555 | Pune      |
+|    107 | ADITYA  | 405     | 25000.00 | 1992-07-26 | 66666666 | Solapur   |
++--------+------+---------+----------+------------+------------+-----------+
+
+7 rows in set (0.01 sec)
+mysql> create view view1 as select emp_id,name,dept_id,salary from emp;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from view1;
+
++--------+------+---------+----------+
+| emp_id | name | dept_id | salary   | 
++--------+------+---------+----------+
+|    101 | SHRIKANT  | 401     |  8000.00 | 
+|    102 | SHREYASH | 401     |  9000.00 | 
+|    103 | SHUBHAM  | 402     | 12000.00 | 
+|    104 | PRATIK  | 403     | 20000.00 | 
+|    105 | RAJU  | 404     |  6000.00 | 
+|    106 | CHINMAY | 405     | 21000.00 | 
+|    107 | ADITYA  | 405     | 25000.00 | 
++--------+------+---------+----------+
+7 rows in set (0.01 sec)
+
+mysql> create view view2 as select emp_id,name,dept_id,salary from emp where dept_id = 401;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from view2;
++--------+------+---------+---------+
+| emp_id | name | dept_id | salary  |
++--------+------+---------+---------+
+|    101 |SHRIKANT  | 401     | 8000.00|
+|    102 | SHREYASH | 401     | 9000.00 |
++--------+------+---------+---------+
+2 rows in set (0.01 sec)
+
+mysql> select * from emp;
++----+---------+-----+----------+---------+
+| id | name    | age | address  | salary  |
++----+---------+-----+----------+---------+
+|  1 | shrikant  |  19 | Pune     | 2000.00 |
+|  2 | shreyash  |  20 | chichwad | 3000.00 |
+|  3 | rutuja   |  26 | pimpari   | 2500.00 |
+|  4 | ram |  24 | rahatni   | 4000.00 |
++----+---------+-----+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> create view emp_view as
+    -> select id,name
+    -> ;
+ERROR 1054 (42S22): Unknown column 'id' in 'field list'
+mysql> create view emp_view as
+    -> select name, salary
+    -> from emp
+    -> ;
+Query OK, 0 rows affected (0.83 sec)
+
+mysql> show emp_view;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'emp_view' at line 1
+mysql> select * from emp_view;
++---------+---------+
+| name    | salary  |
++---------+---------+
+| shrikant  | 2000.00 |
+| shreyash  | 3000.00 |
+| rutuja   | 2500.00 |
+| ram | 4000.00 |
++---------+---------+
+4 rows in set (0.20 sec)
+
+mysql> update emp_view
+    -> set salary=5000
+    -> where name='shrikant';
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp_view;
++---------+---------+
+| name    | salary  |
++---------+---------+
+| shrikant  | 5000.00 |
+| shreyash  | 3000.00 |
+| rutuja   | 2500.00 |
+| ram | 4000.00 |
++---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Student;
++------------+--------------+------+------------+
+| Student_ID | Student_Name | Sex    | 
++------------+--------------+------+------------+
+|       D1 |shrikant      |   M      |      
+|       D2 |shreyash|   M      |        
+|       D3 | rutuja|   F        |        
+|       D4 |ram| M     |         
+|       D5 |shraddha| F        |      
+|       D6 | priya| F        |         
+|       D7 | shubham| M      |         
+|       D8 |rutu| F       |         
+|       D9 |ramu| M       |    
+|       D10 | janak| M       |      
++------------+--------------+------+------------+-----------+---------+
+10 rows in set (0.02 sec)
+
+mysql> CREATE VIEW stud_view AS SELECT  Student_ID,Student_Name FROM Student;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SELECT * FROM stud_view;
++------------+--------------+
+| Student_ID | Student_Name | 
++------------+--------------+
+|       D1 |shrikant      |
+|       D2 |shreyash      |  
+|       D3 |rutuja            |
+|       D4 |ram                 | 
+|       D5 |shraddha       | 
+|       D6 |priya               | 
+|       D7 |shubham      |
+|       D8 |rutu                |
+|       D9 |ramu              | 
+|       D10 | janak         | 
++------------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> CREATE VIEW s_view AS SELECT  Student_ID,Student_Name FROM Student WHERE Student_ID>D5 with check option;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM s_view;
++------------+--------------+
+| Student_ID | Student_Name |
++------------+--------------+
+|       D6 |priya          |
+|       D7 |shubham  |
+|       D8 |rutu            |
+|       D9 | ramu         |
+|       D10 | janak       |
++------------+--------------+
+5 rows in set (0.00 sec)
+

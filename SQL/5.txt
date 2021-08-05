@@ -1,0 +1,98 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> create table transaction_log(user_id varchar(15), description varchar(20));
+Query OK, 0 rows affected (0.92 sec)
+
+mysql> create table employee(id int, first_name varchar(20) , last_name varchar(20), start_data date, last_date date, salary float(8,2), city varchar(15), description varchar(20));
+Query OK, 0 rows affected, 1 warning (3.14 sec)
+
+
+mysql> insert into employee(id, first_name, last_name, start_data, last_date, salary, city, description) values (1,'Shrikant','Sabde','2010','2020',12000.00,'Latur','ACTIVE');
+Query OK, 1 row affected (0.40 sec)
+
+mysql> insert into employee(id, first_name, last_name, start_data, last_date, salary, city, description) values (2,'shreyash','Sabde','2005','2015',6000,'udgir','ACTIVE');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into employee(id, first_name, last_name, start_data, last_date, salary, city, description) values (3,'ram','gurme','2007','2019',9000.00,'nanded','ACTIVE');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from employee;
++------+------------+-----------+------------+------------+----------+---------+---------------+
+| id   | first_name | last_name | start_data | last_date  | salary   | city    | description   |
++------+------------+-----------+------------+------------+----------+---------+---------------+
+|    1 | Shrikant     | Sabde   | 2010|2020| 5000.00| Latur  | ACTIVE |
+|    2 | shreyash     | Sabde     | 2005| 2015 | 6000.00 | udgir    | ACTIVE |
+|    3 | ram        | gurme      | 2007 | 2019 | 7000.00 | nanded | ACTIVE |
++------+------------+-----------+------------+------------+----------+---------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> delimiter ##
+mysql> create trigger trig1
+    -> before delete on employee
+    -> for each row
+    -> begin
+    -> insert into transaction_log(user_id, description) values (user(),'Emp Delete!!');
+    -> end ##
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> delete from employee where id = 1;
+    -> ##
+Query OK, 1 row affected (0.57 sec)
+
+mysql> select * from employee;
+    -> ##
++------+------------+-----------+------------+------------+----------+---------+---------------+
+| id   | first_name | last_name | start_data | last_date  | salary   | city    | description   |
++------+------------+-----------+------------+------------+----------+---------+---------------+
+|    2 | shreyash     | Sabde     | 2005| 2015 | 6000.00 | udgir    | ACTIVE |
+|    3 | ram        | gurme      | 2007 | 2019 | 7000.00 | nanded | ACTIVE |
++------+------------+-----------+------------+------------+----------+---------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from transaction_log;
+    -> ##
++----------------+--------------+
+| user_id        | description  |
++----------------+--------------+
+| root@localhost | Emp Delete!! |
++----------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> delimiter ##
+mysql> create trigger trig2
+    -> before delete on employee
+    -> for each row
+    -> begin
+    -> insert into transaction_log(user_id, description) values (user(), 'Emp Deleted!!');
+    -> end ##
+Query OK, 0 rows affected (0.40 sec)
+
+mysql> delete from employee where id =2;
+    -> ##
+Query OK, 1 row affected (0.48 sec)
+
+mysql> delimiter;
+    -> ##
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimiter' at line 1
+mysql> delimiter ;
+mysql> select * from employee;
++------+------------+-----------+------------+------------+---------+---------+---------------+
+| id   | first_name | last_name | start_data | last_date  | salary  | city    | description   |
++------+------------+-----------+------------+------------+---------+---------+---------------+
+|    3 | ram        | gurme      | 2007 | 2019 |7000.00 | nanded | ACTIVE |
++------+------------+-----------+------------+------------+---------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from transaction_log;
++----------------+---------------+
+| user_id        | description   |
++----------------+---------------+
+| root@localhost | Emp Delete!!  |
+| root@localhost | Emp Delete!!  |
++----------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql>

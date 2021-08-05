@@ -1,0 +1,64 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> select * from grade;
++------+------+------+------+
+| id   | m1   | m2   | m3   |
++------+------+------+------+
+|    1 |   40 |   40 |   40 |
+|    2 |   50 |   40 |   40 |
+|    3 |   50 |   70 |   70 |
++------+------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> delimiter 
+mysql> create procedure grades()
+    -> BEGIN
+    -> DECLARE m1,m2,m3, G INTEGER DEFAULT 0;
+    -> DECLARE id int;
+    -> DECLARE stud_cursor
+    -> CURSOR FOR
+    -> SELECT * FROM student;
+    -> OPEN stud_cursor;
+    -> getMarks:LOOP
+    -> FETCH stud_cursor INTO id,m1,m2,m3;
+    -> SET G=(m1+m2+m3)/3;
+    -> if G>=60
+    -> then select concat('Distinction',G,' ',id) as "rows";
+    -> end if;
+    -> if G<60 and G>=50
+    -> then select concat('First Class',G,' ',id) as "rows";
+    -> end if;
+    -> if G<50
+    -> then select concat('Second Class',G,' ',id) as "rows";
+    -> end if;
+    -> end loop getMarks;
+    -> close stud_cursor;
+    -> end//
+Query OK, 0 rows affected (0.14 sec)
+mysql> delimiter ;
+mysql> call grades();
++------------------+
+| rows             |
++------------------+
+| Second Class40 1 |
++------------------+
+1 row in set (0.00 sec)
+
++------------------+
+| rows             |
++------------------+
+| Second Class43 2 |
++------------------+
+1 row in set (0.01 sec)
+
++-----------------+
+| rows            |
++-----------------+
+| Distinction63 3 |
++-----------------+
+1 row in set (0.02 sec)
+
+mysql>

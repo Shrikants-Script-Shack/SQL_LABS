@@ -1,0 +1,93 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| dbms               |
+| information_schema |
+| labs               |
+| mysql              |
+| performance_schema |
+| practicle          |
+| shrikant           |
+| sys                |
+| userlogin          |
++--------------------+
+9 rows in set (0.29 sec)
+mysql> use practicle;
+Database changed
+mysql> create table student(roll_no varchar(20) not null auto_increment, name varchar(30) not null, grade int, phone int unique,primary key(roll_no));
+ERROR 1063 (42000): Incorrect column specifier for column 'roll_no'
+mysql> create table student(roll_no varchar(20) not null, name varchar(30) not null, grade int, phone int unique,primary key(roll_no));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> alter table student add city varchar(20) after grade;
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | varchar(20) | NO   | PRI | NULL    |       |
+| name    | varchar(30) | NO   |     | NULL    |       |
+| grade   | int         | YES  |     | NULL    |       |
+| city    | varchar(20) | YES  |     | NULL    |       |
+| phone   | int         | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql> use labs;
+Database changed
+mysql> create table list( srno integer(10),name varchar(20),city varchar(10),passkey integer(10));
+Query OK, 0 rows affected, 2 warnings (2.45 sec)
+
+mysql> insert into list values(1,'shrikant','pune',101);
+Query OK, 1 row affected (0.29 sec)
+
+mysql> insert into list values(2,'shreyash','latur',102);
+Query OK, 1 row affected (0.34 sec)
+
+mysql> insert into list values(3,'yogesh','udgir',103);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from list;
++------+----------+-------+---------+
+| srno | name     | city  | passkey |
++------+----------+-------+---------+
+|    1 | shrikant | pune  |     101 |
+|    2 | shreyash | latur |     102 |
+|    3 | yogesh   | udgir |     103 |
++------+----------+-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> alter table list add phone integer(10);
+Query OK, 0 rows affected, 1 warning (1.97 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select * from list;
++------+----------+-------+---------+-------+
+| srno | name     | city  | passkey | phone |
++------+----------+-------+---------+-------+
+|    1 | shrikant | pune  |     101 |  NULL |
+|    2 | shreyash | latur |     102 |  NULL |
+|    3 | yogesh   | udgir |     103 |  NULL |
++------+----------+-------+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table list drop passkey;
+Query OK, 0 rows affected (1.67 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from list;
++------+----------+-------+-------+
+| srno | name     | city  | phone |
++------+----------+-------+-------+
+|    1 | shrikant | pune  |  NULL |
+|    2 | shreyash | latur |  NULL |
+|    3 | yogesh   | udgir |  NULL |
++------+----------+-------+-------+
+3 rows in set (0.00 sec)
